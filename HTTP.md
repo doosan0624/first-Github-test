@@ -58,6 +58,76 @@ IP 프로토콜의 문제점
      * IP 주소는 기억하기 어렵고, 변경될 가능성이 있다!
      * 그래서 도메인 명을 IP주소로 변환함 ex) 도메인 명 : www.google.com, IP : 200.200.200.2 
 
+ 
+ URI와 웹 브라우저 요청 흐름
+ 
+  * URI ( Uniform Resource Identifier)
+    
+    * Unform : 리소스를 식별하는 통일된 방식
+    * Resource : 자원, URI로 식별할 수 있는 모든 것(제한 없음)
+    * Identifier : 다른 항목과 구분하는데 필요한 정보
+    * URI는 로케이터(locator), 이름(name) 또는 둘 다 추가로 분류 될 수 있다!
+    * 그래서 URI라는 가장 큰 개념이 있고 그 아래 URL, URN이 있는 것!
+
+  * URL (Locator)
+    
+    * 리소스가 있는 위치를 지정한다
+    * ex) https://www.google.com/search?q=hello&hi=ko 
+    * 전체 문법
+     
+      * scheme://[userinfo@]host[:port][/path][?query][#fragment]
+      * https://www.google.com:443/search?q=hello&hi=ko
+      
+      * scheme  
+        * 보통 프로토콜 정보가 들어감 
+        * http는 80포트, https는 443포트를 주로 사용 
+        * 포트는 생략 가능
+      * userinfo@  
+        * URL에 사용자 정보를 포함해서 인증 
+        * 거의 사용하지 않음
+      * host  
+        * 호스트명 
+        * 도메인명 또는 IP 주소를 직접 사용가능
+      * PORT  
+        * 접속 포트. 
+        * 일반적으로 생략함 
+        * 생략시 http는 80, https는 443
+      * path  
+        * 리소스 경로(path), 계층적 구조 
+        * ex) /members/100 맴버들 중 100번 회원을 보겠다!
+      * query 
+        * key=value 형태
+        * ?로 시작, &로 추가 가능 ?keyA=valueA&keyB=valueB 식으로
+        * query parameter, query string 등으로 불림, 웹서버에 제공하는 파라미터, 문자형태
+
+      * fragment
+        * html 내부 북마크 등에 사용됨
+        * 서버에 전송하는 정보 아님
+ 
+    웹 브라우저 요청 흐름
+        
+       * 1. 웹 브라우저(애플리케이션)에서 HTTP 메세지(GET, POST 등등) 생성
+       * 2. SOCKET 라이브러리를 통해 전달 
+         * TCP/IP 연결(IP, PORT)
+         * 데이터 전달
+         * 이곳에서 TCP 3 way handshake가 일어난다
+       * 3. TCP/IP 패킷 생성, HTTP 메세지 포함
+         * 전달받은 데이터의 목적지 IP, PORT를 설정한 후 나의 IP, PORT도 설정 
+         * TCP/IP 패킷 안에 HTTP 메세지가 들어가 있는 것!
+       * 4. 네트워크 인터페이스
+         * LAN 드라이버 
+         * LAN 장비
+         * 이후 인터넷을 통해 서버로 전송
+       * 5. 서버
+         * 요청 패킷을 받으면 TCP/IP 패킷을 까서 버린다.
+         * HTTP 메세지만 끄집어내서 해석을 함 (쿼리 등을 해석)
+          * ex) www.google.com/search?q=hello&hi=ko
+          * 쿼리는 hello,  path는 search니까 검색하는 거구나. hl는 ko니까 한국어구나
+          * 이런 해석을 통해 검색 엔진을 통해서 hello에 대한 데이터들을 찾는다!
+          * 그러고 난 후에 응답 패킷을 만들어서 TCP/IP 패킷으로 만들어서 응답을 해준다
+        
+  
+
     
     
  
