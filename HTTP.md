@@ -183,10 +183,53 @@ IP 프로토콜의 문제점
       * 지금은 HTTP 지속 연결로 문제 해결!
     * HTTP/2, HTTP/3 에서 더 많은 최적화가 됨
 
- 
-      
-  
 
+    
+    ![스크린샷 2021-11-24 오후 3 27 05](https://user-images.githubusercontent.com/68314042/143186320-154fd6c3-e227-4c82-ad12-f5bec5baa4af.png)
+
+ 
+    HTTP 메시지
+    
+    * 시작라인
+      * 요청 메시지
+        * start-line = request-line / status-line
+        * request-line = method SP(공백) request-target SP HTTP-version CRLF(엔터)
+        * GET / search?q=hello&hi=ko HTTP/1.1 <- 이런식으로
+        * HTTP 메서드를 통해서 서버가 수행해야 할 동작을 지정함
+          * GET : 리소스 조회
+          * POST : 요청 내역 처리
+          * PUT : 업데이트
+          * DELETE : 삭제
+          
+      * 응답 메시지
+        * start-line = status-line
+        * status-line = HTTP-version SP staus-code SP reason-phrase CRLF
+        * HTTP/1.1 200 OK <- 이런식으로
+        * HTTP 상태코드 : 요청 성공, 실패를 나타낸다
+          * 200 : 성공
+          * 400 : 클라이언트 요청 오류
+          * 500 : 서버 내부 오류
+          * 이유 문구 : 상태 코드에 대해 사람이 이해할 수 있게 나타낸 짧은 설명 글
+
+      * HTTP 헤더
+        * header-field = field-name ":" OWS field-value OWS (OWS: 띄어쓰기를 해도 되고 안해도 됨)
+        * field-name은 대소문자 구분 없다 (value는 대소문자 구분 함!)
+        * ex)
+          * Host: www.google.com
+          * Content-Type: text/html;charset=UTF-8
+          * Content-Length: 3423    
+        * HTTP 헤더의 용도
+          * HTTP 전송에 필요한 모든 부가정보가 있음
+            * 메시지 바디의 내용, 크기, 압축, 인증, 클라이언트 정보 등등
+
+      * HTTP 메시지 바디
+        * 실제 전송할 데이터
+        * HTML 문서, 이미지, 영상, JSON 등등 byte로 표현할 수 있는 모든 데이터가 전송 가능
+  
+      * 정리 
+        * HTTP는 단순하고 확장 가능하다! 
+        * HTTP 메시지 구성이 시작 줄, 머리, 몸 순서로 존재하니 단순하다
+        
     
     
  
